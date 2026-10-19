@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +23,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('wallets', WalletController::class);
     Route::apiResource('categories', CategoryController::class)->except(['show']);
     Route::apiResource('transactions', TransactionController::class);
+    Route::apiResource('budgets', BudgetController::class)->only(['index', 'store', 'destroy']);
+
+    Route::prefix('reports')->group(function () {
+        Route::get('monthly', [ReportController::class, 'monthly']);
+        Route::get('daily', [ReportController::class, 'daily']);
+        Route::get('export', [ReportController::class, 'export']);
+    });
 });

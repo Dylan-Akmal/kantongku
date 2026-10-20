@@ -11,6 +11,7 @@ class GroupBalanceService
 {
     /**
      * Saldo bersih tiap anggota grup, dalam rupiah.
+     * Positif: masih harus menerima uang. Negatif: masih berutang.
      *
      * @return array<int, int> user_id => saldo
      */
@@ -56,5 +57,56 @@ class GroupBalanceService
     public function balanceOf(SplitGroup $group, int $userId): int
     {
         return $this->balances($group)[$userId] ?? 0;
+    }
+
+    /**
+     * Daftar pembayaran sesedikit mungkin untuk menutup semua saldo:
+     * yang paling banyak berutang membayar yang paling banyak piutangnya.
+     *
+     * @param  array<int, int>  $balances
+     * @return array<int, array{from: int, to: int, amount: int}>
+     */
+    public function simplify(array $balances): array
+    {
+        $creditors = [];
+        $debtors = [];
+
+        foreach ($balances as $userId => $balance) {
+            if ($balance > 0) {
+                $creditors[] = ['id' => $userId, 'amount' => $balance];
+            } elseif ($balance < 0) {
+                $debtors[] = ['id' => $userId, 'amount' => -$balance];
+            }
+        }
+
+        $byAmountDesc = fn (array $a, array $b) => $b['amount'] <=> $a['amount'];
+        usort($creditors, $byAmountDesc);
+        usort($debtors, $byAmountDesc);
+
+        $payments = [];
+        $i = 0;
+        $j = 0;
+
+        while ($i < count($debtors) && $j < count($creditors)) {
+            $pay = min($debtors[$i]['amount'], $creditors[$j]['amount']);
+
+            $payments[] = [
+                'from' => $debtors[$i]['id'],
+                'to' => $creditors[$j]['id'],
+                'amount' => $pay,
+            ];
+
+            $debtors[$i]['amount'] -= $pay;
+            $creditors[$j]['amount'] -= $pay;
+
+            if ($debtors[$i]['amount'] === 0) {
+                $i++;
+            }
+            if ($creditors[$j]['amount'] === 0) {
+                $j++;
+            }
+        }
+
+        return $payments;
     }
 }

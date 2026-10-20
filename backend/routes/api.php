@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WalletController;
@@ -30,4 +31,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('daily', [ReportController::class, 'daily']);
         Route::get('export', [ReportController::class, 'export']);
     });
+
+    Route::post('groups/join', [GroupController::class, 'join']);
+    Route::apiResource('groups', GroupController::class);
+    Route::post('groups/{id}/regenerate-code', [GroupController::class, 'regenerateCode']);
+    Route::post('groups/{id}/leave', [GroupController::class, 'leave']);
+    Route::delete('groups/{id}/members/{userId}', [GroupController::class, 'removeMember']);
 });

@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GroupBalanceController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupExpenseController;
+use App\Http\Controllers\GroupHistoryController;
+use App\Http\Controllers\GroupSettlementController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WalletController;
@@ -47,4 +49,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('groups/{id}/expenses/{expenseId}', [GroupExpenseController::class, 'destroy']);
 
     Route::get('groups/{id}/balances', [GroupBalanceController::class, 'show']);
+
+    Route::post('groups/{id}/settlements', [GroupSettlementController::class, 'store']);
+    Route::delete('groups/{id}/settlements/{settlementId}', [GroupSettlementController::class, 'destroy']);
+
+    Route::get('groups/{id}/history', [GroupHistoryController::class, 'index']);
 });

@@ -1,10 +1,21 @@
 <script setup>
 import { onMounted } from 'vue'
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
+const route = useRoute()
 const router = useRouter()
+
+const navItems = [
+  { to: '/', label: 'Dashboard' },
+  { to: '/wallets', label: 'Dompet' },
+  { to: '/categories', label: 'Kategori' },
+]
+
+function isActive(item) {
+  return item.to === '/' ? route.path === '/' : route.path.startsWith(item.to)
+}
 
 onMounted(() => {
   // Segarkan data pengguna; bila token sudah tidak berlaku, klien HTTP otomatis mengarahkan ke login.
@@ -31,6 +42,24 @@ async function logout() {
           <button class="btn-secondary" @click="logout">Keluar</button>
         </div>
       </div>
+
+      <nav class="border-t border-slate-100">
+        <div class="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 text-sm">
+          <RouterLink
+            v-for="item in navItems"
+            :key="item.to"
+            :to="item.to"
+            class="whitespace-nowrap border-b-2 px-3 py-2.5 font-medium transition"
+            :class="
+              isActive(item)
+                ? 'border-emerald-600 text-emerald-700'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            "
+          >
+            {{ item.label }}
+          </RouterLink>
+        </div>
+      </nav>
     </header>
 
     <main class="mx-auto max-w-6xl px-4 py-6">

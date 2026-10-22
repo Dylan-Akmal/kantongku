@@ -24,6 +24,16 @@ const routes = [
         name: 'dashboard',
         component: () => import('@/views/DashboardView.vue'),
       },
+      {
+        path: 'wallets',
+        name: 'wallets',
+        component: () => import('@/views/WalletsView.vue'),
+      },
+      {
+        path: 'categories',
+        name: 'categories',
+        component: () => import('@/views/CategoriesView.vue'),
+      },
     ],
   },
   { path: '/:pathMatch(.*)*', redirect: '/' },

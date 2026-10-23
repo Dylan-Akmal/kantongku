@@ -6,7 +6,8 @@ const props = defineProps({
   days: { type: Array, required: true },
 })
 
-const GROUP_WIDTH = 22
+const GROUP_WIDTH = 16
+const BAR_WIDTH = 5
 const HEIGHT = 170
 const PAD_TOP = 8
 const PAD_BOTTOM = 22
@@ -81,26 +82,26 @@ function tooltip(day) {
 
         <g v-for="(day, index) in days" :key="day.date">
           <rect
-            :x="groupX(index) + 3"
+            :x="groupX(index) + 2"
             :y="barY(day.income)"
-            width="7"
+            :width="BAR_WIDTH"
             :height="barHeight(day.income)"
             rx="1.5"
             class="fill-emerald-500"
           />
           <rect
-            :x="groupX(index) + 11"
+            :x="groupX(index) + 8"
             :y="barY(day.expense)"
-            width="7"
+            :width="BAR_WIDTH"
             :height="barHeight(day.expense)"
             rx="1.5"
             class="fill-rose-500"
           />
           <text
-            :x="groupX(index) + 11"
+            :x="groupX(index) + 7.5"
             :y="HEIGHT - 8"
             text-anchor="middle"
-            font-size="9"
+            font-size="8"
             class="fill-slate-500"
           >
             {{ dayNumber(day.date) }}

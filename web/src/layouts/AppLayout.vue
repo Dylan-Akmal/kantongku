@@ -10,6 +10,8 @@ const router = useRouter()
 const navItems = [
   { to: '/', label: 'Dashboard' },
   { to: '/transactions', label: 'Transaksi' },
+  { to: '/budgets', label: 'Anggaran' },
+  { to: '/reports', label: 'Laporan' },
   { to: '/wallets', label: 'Dompet' },
   { to: '/categories', label: 'Kategori' },
 ]

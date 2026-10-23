@@ -14,6 +14,7 @@ const navItems = [
   { to: '/reports', label: 'Laporan' },
   { to: '/wallets', label: 'Dompet' },
   { to: '/categories', label: 'Kategori' },
+  { to: '/groups', label: 'Grup' },
 ]
 
 function isActive(item) {

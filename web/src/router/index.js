@@ -49,6 +49,16 @@ const routes = [
         name: 'categories',
         component: () => import('@/views/CategoriesView.vue'),
       },
+      {
+        path: 'groups',
+        name: 'groups',
+        component: () => import('@/views/GroupsView.vue'),
+      },
+      {
+        path: 'groups/:id',
+        name: 'group-detail',
+        component: () => import('@/views/GroupDetailView.vue'),
+      },
     ],
   },
   { path: '/:pathMatch(.*)*', redirect: '/' },

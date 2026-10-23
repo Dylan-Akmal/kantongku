@@ -25,6 +25,11 @@ const routes = [
         component: () => import('@/views/DashboardView.vue'),
       },
       {
+        path: 'transactions',
+        name: 'transactions',
+        component: () => import('@/views/TransactionsView.vue'),
+      },
+      {
         path: 'wallets',
         name: 'wallets',
         component: () => import('@/views/WalletsView.vue'),

@@ -1,5 +1,33 @@
-# Vue 3 + Vite
+# Kantongku Web
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Aplikasi web Kantongku dibangun dengan Vue 3, Vite, Tailwind CSS, Pinia, Vue Router, dan Axios. Aplikasi ini memakai REST API di folder `backend`.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Menjalankan
+
+Prasyarat: Node.js 20+ dan API sudah berjalan (lihat README di root repo).
+
+```bash
+npm install
+cp .env.example .env   # sesuaikan VITE_API_URL bila perlu
+npm run dev
+```
+
+Buka `http://localhost:5173`.
+
+## Skrip
+
+| Perintah | Fungsi |
+|---|---|
+| `npm run dev` | Server pengembangan dengan hot reload |
+| `npm run build` | Build produksi ke folder `dist` |
+| `npm run preview` | Pratinjau hasil build |
+
+## Struktur `src`
+
+- `api/` klien HTTP (Axios) beserta pengelolaan token dan pesan kesalahan
+- `stores/` state global (Pinia), mis. status login
+- `router/` rute dan penjaga halaman
+- `layouts/` kerangka halaman setelah login
+- `views/` halaman
+- `components/` komponen yang dipakai ulang (pop-up, dialog konfirmasi)
+- `utils/` fungsi bantu (format rupiah, label)

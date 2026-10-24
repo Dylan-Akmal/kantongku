@@ -4,6 +4,7 @@ import { onMounted, onUnmounted } from 'vue'
 const props = defineProps({
   open: { type: Boolean, default: false },
   title: { type: String, required: true },
+  wide: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['close'])
@@ -25,7 +26,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
       class="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/50 p-4 sm:items-center"
       @click.self="emit('close')"
     >
-      <div class="w-full max-w-md rounded-xl bg-white p-5 shadow-xl">
+      <div
+        class="max-h-[90vh] w-full overflow-y-auto rounded-xl bg-white p-5 shadow-xl"
+        :class="wide ? 'max-w-xl' : 'max-w-md'"
+      >
         <div class="flex items-start justify-between gap-4">
           <h2 class="text-lg font-semibold text-slate-800">{{ title }}</h2>
           <button

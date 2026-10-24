@@ -1,11 +1,26 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import http, { errorMessage } from '@/api/http'
+import GroupBalancesPanel from '@/components/GroupBalancesPanel.vue'
+import GroupExpensesPanel from '@/components/GroupExpensesPanel.vue'
+import GroupHistoryPanel from '@/components/GroupHistoryPanel.vue'
 import GroupMembersPanel from '@/components/GroupMembersPanel.vue'
 import { roleLabels } from '@/utils/groups'
 
 const route = useRoute()
+
+const tabs = [
+  { key: 'expenses', label: 'Pengeluaran' },
+  { key: 'balances', label: 'Saldo' },
+  { key: 'history', label: 'Riwayat' },
+  { key: 'members', label: 'Anggota' },
+]
+
+const activeTab = computed(() => {
+  const requested = route.query.tab
+  return tabs.some((tab) => tab.key === requested) ? requested : 'expenses'
+})
 
 const group = ref(null)
 const loading = ref(true)
@@ -56,9 +71,7 @@ watch(
 
     <div v-else-if="notFound" class="card mt-5">
       <p class="font-medium">Grup tidak ditemukan</p>
-      <p class="mt-1 text-sm text-slate-500">
-        Grup ini tidak ada, atau kamu bukan anggotanya.
-      </p>
+      <p class="mt-1 text-sm text-slate-500">Grup ini tidak ada, atau kamu bukan anggotanya.</p>
     </div>
 
     <p
@@ -77,8 +90,28 @@ watch(
         {{ group.member_count }} anggota · Pemilik: {{ group.owner?.name }}
       </p>
 
+      <div class="mt-4 flex gap-1 overflow-x-auto border-b border-slate-200 text-sm">
+        <RouterLink
+          v-for="tab in tabs"
+          :key="tab.key"
+          replace
+          :to="{ query: { tab: tab.key } }"
+          class="whitespace-nowrap border-b-2 px-4 py-2.5 font-medium transition"
+          :class="
+            activeTab === tab.key
+              ? 'border-emerald-600 text-emerald-700'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+          "
+        >
+          {{ tab.label }}
+        </RouterLink>
+      </div>
+
       <div class="mt-5">
-        <GroupMembersPanel :group="group" @changed="load" />
+        <GroupExpensesPanel v-if="activeTab === 'expenses'" :group="group" />
+        <GroupBalancesPanel v-else-if="activeTab === 'balances'" :group="group" />
+        <GroupHistoryPanel v-else-if="activeTab === 'history'" :group="group" />
+        <GroupMembersPanel v-else :group="group" @changed="load" />
       </div>
     </template>
   </div>

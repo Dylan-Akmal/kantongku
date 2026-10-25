@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/ui.dart';
 import '../auth/auth_provider.dart';
 
 class MorePage extends StatelessWidget {
@@ -9,25 +11,14 @@ class MorePage extends StatelessWidget {
   Future<void> _confirmLogout(BuildContext context) async {
     final auth = context.read<AuthProvider>();
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Keluar'),
-        content: const Text('Yakin ingin keluar dari Kantongku?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Batal'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Keluar'),
-          ),
-        ],
-      ),
+    final confirmed = await confirmDialog(
+      context,
+      title: 'Keluar',
+      message: 'Yakin ingin keluar dari Kantongku?',
+      confirmText: 'Keluar',
     );
 
-    if (confirmed == true) {
+    if (confirmed) {
       await auth.logout();
     }
   }
@@ -48,28 +39,30 @@ class MorePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const Card(
+          Card(
             child: Column(
               children: [
                 ListTile(
-                  leading: Icon(Icons.account_balance_wallet_outlined),
-                  title: Text('Dompet'),
-                  subtitle: Text('Segera hadir'),
+                  leading: const Icon(Icons.account_balance_wallet_outlined),
+                  title: const Text('Dompet'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/wallets'),
                 ),
-                Divider(height: 1),
+                const Divider(height: 1),
                 ListTile(
-                  leading: Icon(Icons.category_outlined),
-                  title: Text('Kategori'),
-                  subtitle: Text('Segera hadir'),
+                  leading: const Icon(Icons.category_outlined),
+                  title: const Text('Kategori'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/categories'),
                 ),
-                Divider(height: 1),
-                ListTile(
+                const Divider(height: 1),
+                const ListTile(
                   leading: Icon(Icons.savings_outlined),
                   title: Text('Anggaran'),
                   subtitle: Text('Segera hadir'),
                 ),
-                Divider(height: 1),
-                ListTile(
+                const Divider(height: 1),
+                const ListTile(
                   leading: Icon(Icons.bar_chart_outlined),
                   title: Text('Laporan'),
                   subtitle: Text('Segera hadir'),

@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'features/auth/auth_provider.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/register_screen.dart';
+import 'features/categories/categories_screen.dart';
 import 'features/home/home_shell.dart';
+import 'features/wallets/wallets_screen.dart';
 
 GoRouter buildRouter(AuthProvider auth) {
   return GoRouter(
@@ -22,6 +24,8 @@ GoRouter buildRouter(AuthProvider auth) {
       GoRoute(path: '/', builder: (context, state) => const HomeShell()),
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(path: '/register', builder: (context, state) => const RegisterScreen()),
+      GoRoute(path: '/wallets', builder: (context, state) => const WalletsScreen()),
+      GoRoute(path: '/categories', builder: (context, state) => const CategoriesScreen()),
     ],
   );
 }

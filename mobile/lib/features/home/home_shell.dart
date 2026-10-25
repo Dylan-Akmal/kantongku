@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../widgets/placeholder_page.dart';
 import '../auth/auth_provider.dart';
 import '../dashboard/dashboard_page.dart';
+import '../transactions/transactions_page.dart';
 import 'more_page.dart';
 
 class HomeShell extends StatefulWidget {
@@ -16,12 +17,8 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _index = 0;
 
-  final List<Widget> _pages = const [
-    DashboardPage(),
-    PlaceholderPage(title: 'Transaksi', icon: Icons.receipt_long_outlined),
-    PlaceholderPage(title: 'Grup patungan', icon: Icons.group_outlined),
-    MorePage(),
-  ];
+  // Naik setiap kali pengguna kembali ke Beranda dari tab lain, agar data dimuat ulang.
+  int _dashboardVersion = 0;
 
   @override
   void initState() {
@@ -29,13 +26,28 @@ class _HomeShellState extends State<HomeShell> {
     context.read<AuthProvider>().refreshUser();
   }
 
+  void _select(int index) {
+    setState(() {
+      if (index == 0 && _index != 0) _dashboardVersion++;
+      _index = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _index, children: _pages),
+      body: IndexedStack(
+        index: _index,
+        children: [
+          DashboardPage(key: ValueKey(_dashboardVersion)),
+          const TransactionsPage(),
+          const PlaceholderPage(title: 'Grup patungan', icon: Icons.group_outlined),
+          const MorePage(),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
-        onDestinationSelected: (index) => setState(() => _index = index),
+        onDestinationSelected: _select,
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
@@ -52,10 +64,7 @@ class _HomeShellState extends State<HomeShell> {
             selectedIcon: Icon(Icons.group),
             label: 'Grup',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.menu),
-            label: 'Lainnya',
-          ),
+          NavigationDestination(icon: Icon(Icons.menu), label: 'Lainnya'),
         ],
       ),
     );

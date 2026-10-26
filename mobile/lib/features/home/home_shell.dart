@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/placeholder_page.dart';
 import '../auth/auth_provider.dart';
 import '../dashboard/dashboard_page.dart';
+import '../groups/groups_page.dart';
 import '../transactions/transactions_page.dart';
 import 'more_page.dart';
 
@@ -41,7 +41,7 @@ class _HomeShellState extends State<HomeShell> {
         children: [
           DashboardPage(key: ValueKey(_dashboardVersion)),
           const TransactionsPage(),
-          const PlaceholderPage(title: 'Grup patungan', icon: Icons.group_outlined),
+          const GroupsPage(),
           const MorePage(),
         ],
       ),

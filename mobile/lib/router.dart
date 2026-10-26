@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'features/auth/auth_provider.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/register_screen.dart';
+import 'features/budgets/budgets_screen.dart';
 import 'features/categories/categories_screen.dart';
 import 'features/home/home_shell.dart';
+import 'features/reports/reports_screen.dart';
 import 'features/wallets/wallets_screen.dart';
 
 GoRouter buildRouter(AuthProvider auth) {
@@ -26,6 +28,8 @@ GoRouter buildRouter(AuthProvider auth) {
       GoRoute(path: '/register', builder: (context, state) => const RegisterScreen()),
       GoRoute(path: '/wallets', builder: (context, state) => const WalletsScreen()),
       GoRoute(path: '/categories', builder: (context, state) => const CategoriesScreen()),
+      GoRoute(path: '/budgets', builder: (context, state) => const BudgetsScreen()),
+      GoRoute(path: '/reports', builder: (context, state) => const ReportsScreen()),
     ],
   );
 }

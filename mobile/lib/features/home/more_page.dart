@@ -23,6 +23,15 @@ class MorePage extends StatelessWidget {
     }
   }
 
+  Widget _menuTile(BuildContext context, IconData icon, String title, String path) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () => context.push(path),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
@@ -42,31 +51,13 @@ class MorePage extends StatelessWidget {
           Card(
             child: Column(
               children: [
-                ListTile(
-                  leading: const Icon(Icons.account_balance_wallet_outlined),
-                  title: const Text('Dompet'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.push('/wallets'),
-                ),
+                _menuTile(context, Icons.account_balance_wallet_outlined, 'Dompet', '/wallets'),
                 const Divider(height: 1),
-                ListTile(
-                  leading: const Icon(Icons.category_outlined),
-                  title: const Text('Kategori'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.push('/categories'),
-                ),
+                _menuTile(context, Icons.category_outlined, 'Kategori', '/categories'),
                 const Divider(height: 1),
-                const ListTile(
-                  leading: Icon(Icons.savings_outlined),
-                  title: Text('Anggaran'),
-                  subtitle: Text('Segera hadir'),
-                ),
+                _menuTile(context, Icons.savings_outlined, 'Anggaran', '/budgets'),
                 const Divider(height: 1),
-                const ListTile(
-                  leading: Icon(Icons.bar_chart_outlined),
-                  title: Text('Laporan'),
-                  subtitle: Text('Segera hadir'),
-                ),
+                _menuTile(context, Icons.bar_chart_outlined, 'Laporan', '/reports'),
               ],
             ),
           ),

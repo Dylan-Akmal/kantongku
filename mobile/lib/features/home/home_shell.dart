@@ -39,7 +39,11 @@ class _HomeShellState extends State<HomeShell> {
       body: IndexedStack(
         index: _index,
         children: [
-          DashboardPage(key: ValueKey(_dashboardVersion)),
+          DashboardPage(
+            key: ValueKey(_dashboardVersion),
+            onOpenTransactions: () => _select(1),
+            onOpenGroups: () => _select(2),
+          ),
           const TransactionsPage(),
           const GroupsPage(),
           const MorePage(),

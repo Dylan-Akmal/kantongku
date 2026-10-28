@@ -59,6 +59,11 @@ const routes = [
         name: 'group-detail',
         component: () => import('@/views/GroupDetailView.vue'),
       },
+      {
+        path: 'account',
+        name: 'account',
+        component: () => import('@/views/AccountView.vue'),
+      },
     ],
   },
   { path: '/:pathMatch(.*)*', redirect: '/' },

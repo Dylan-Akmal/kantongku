@@ -15,6 +15,7 @@ const navItems = [
   { to: '/wallets', label: 'Dompet' },
   { to: '/categories', label: 'Kategori' },
   { to: '/groups', label: 'Grup' },
+  { to: '/account', label: 'Akun' },
 ]
 
 function isActive(item) {
@@ -42,7 +43,9 @@ async function logout() {
         </RouterLink>
 
         <div class="flex items-center gap-3 text-sm">
-          <span class="hidden text-slate-500 sm:inline">{{ auth.user?.name }}</span>
+            <RouterLink to="/account" class="hidden text-slate-500 hover:text-slate-800 transition sm:inline">
+              {{ auth.user?.name }}
+            </RouterLink>
           <button class="btn-secondary" @click="logout">Keluar</button>
         </div>
       </div>

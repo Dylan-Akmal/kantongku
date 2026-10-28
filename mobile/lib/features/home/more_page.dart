@@ -57,6 +57,8 @@ class MorePage extends StatelessWidget {
                 const Divider(height: 1),
                 _menuTile(context, Icons.savings_outlined, 'Anggaran', '/budgets'),
                 const Divider(height: 1),
+                _menuTile(context, Icons.manage_accounts_outlined, 'Akun', '/account'),
+                const Divider(height: 1),
                 _menuTile(context, Icons.bar_chart_outlined, 'Laporan', '/reports'),
               ],
             ),

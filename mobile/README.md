@@ -1,17 +1,39 @@
-# kantongku_mobile
+# Kantongku Mobile
 
-A new Flutter project.
+Aplikasi Android Kantongku, dibangun dengan Flutter. Aplikasi ini memakai REST API di folder `backend`.
 
-## Getting Started
+## Menjalankan
 
-This project is a starting point for a Flutter application.
+Prasyarat: Flutter SDK, Android Studio dengan emulator (atau ponsel Android), dan API yang sudah berjalan (lihat README di root repo).
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+flutter run
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Alamat API bawaan adalah `http://10.0.2.2:8000/api`, yaitu alamat komputer host dari dalam emulator Android. Untuk ponsel sungguhan, jalankan backend dengan `php artisan serve --host=0.0.0.0` lalu ganti alamatnya:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter run --dart-define=API_URL=http://192.168.x.x:8000/api
+```
+
+Jika build Android gagal karena versi Java tidak cocok dengan Gradle, arahkan Gradle ke JDK yang kompatibel lewat berkas pengguna `~/.gradle/gradle.properties` (`org.gradle.java.home=...`). Jangan menaruh jalur itu di dalam repo.
+
+## Pengujian
+
+```bash
+flutter analyze
+flutter test
+```
+
+Keduanya juga dijalankan otomatis di GitHub Actions (workflow **Mobile Checks**).
+
+## Struktur `lib`
+
+- `core/` konfigurasi, klien HTTP (Dio), penyimpanan token, format rupiah dan tanggal, label
+- `features/` satu folder per fitur: `auth`, `dashboard`, `home`, `wallets`, `categories`, `transactions`, `budgets`, `reports`, `groups`, `account`
+- `widgets/` komponen yang dipakai ulang (kotak galat, pemilih bulan, lembar satu isian)
+- `router.dart` rute dengan penjaga login (go_router)
+- `app.dart` dan `main.dart` tema, bahasa Indonesia, dan perakit aplikasi
+
+Setiap fitur memisahkan model, repository (pemanggilan API), dan layar.

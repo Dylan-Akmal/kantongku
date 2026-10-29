@@ -118,7 +118,7 @@ Aplikasi mandiri berarsitektur klien-server. Web dan mobile berkomunikasi dengan
 | ID | Kebutuhan |
 |---|---|
 | FR-27 | Sistem menghitung saldo bersih tiap anggota: total yang dibayar dikurangi total porsi, disesuaikan pelunasan |
-| FR-28 | Sistem menampilkan penyederhanaan utang: daftar pembayaran minimal (siapa membayar siapa, berapa) agar semua saldo menjadi nol |
+| FR-28 | Sistem menampilkan penyederhanaan utang: daftar pembayaran sesedikit mungkin (siapa membayar siapa, berapa) agar semua saldo menjadi nol |
 | FR-29 | Anggota dapat mencatat pelunasan kepada anggota lain dengan nominal dan catatan |
 | FR-30 | Riwayat grup menampilkan pengeluaran bersama dan pelunasan secara kronologis |
 
